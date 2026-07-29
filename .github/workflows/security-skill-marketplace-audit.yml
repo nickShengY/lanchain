@@ -1,4 +1,4 @@
-name: Security skill marketplace audit
+name: Security skill marketplace audit — all category listings
 
 on:
   pull_request:
@@ -24,7 +24,23 @@ jobs:
         run: python -m pip install --disable-pip-version-check requests beautifulsoup4 lxml
       - name: Decode collector
         run: base64 -d audit_collector.py.gz.b64 | gzip -d > audit_collector.py
-      - name: Run exhaustive high-recall census and source review
+      - name: Force source review of every enumerated listing
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          p=Path('audit_collector.py')
+          s=p.read_text()
+          old=" for x in ret:\n  k=(norm(x.get('repo_label')) or norm(x.get('marketplace_url')),snorm(x.get('skill_slug')or x.get('skill_name')));groups[k].append(x)"
+          new=" for x in allrows:\n  k=(norm(x.get('repo_label')) or norm(x.get('marketplace_url')),snorm(x.get('skill_slug')or x.get('skill_name')));groups[k].append(x)"
+          if old not in s:
+              raise SystemExit('expected source-review loop not found')
+          s=s.replace(old,new,1)
+          s=s.replace("'complete':sum(s==200 for s in stats)==len(QUERIES),'limit':'High-recall keyword API census, not a bulk category export'", "'complete':False,'limit':'High-recall 50-query keyword API census under documented anonymous quota; not a bulk category export'", 1)
+          p.write_text(s)
+          PY
+          python -m py_compile audit_collector.py
+      - name: Run exhaustive census and source review
         id: audit
         continue-on-error: true
         run: python audit_collector.py
@@ -32,7 +48,7 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: security-skill-marketplace-audit-output
+          name: security-skill-marketplace-audit-all-output
           path: audit_output
           include-hidden-files: true
           if-no-files-found: error
