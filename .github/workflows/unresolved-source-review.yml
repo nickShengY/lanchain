@@ -1,0 +1,40 @@
+name: Review unresolved security-skill candidates
+
+on:
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  review:
+    runs-on: ubuntu-latest
+    timeout-minutes: 330
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Decode source-review collector and manifest
+        run: |
+          base64 -d unresolved_review.py.gz.b64 | gzip -d > unresolved_review.py
+          base64 -d unresolved_manifest.json.gz.b64 | gzip -d > unresolved_manifest.json
+          python -m py_compile unresolved_review.py
+      - name: Clone and inspect every retained unresolved candidate
+        id: review
+        continue-on-error: true
+        run: python unresolved_review.py
+      - name: Upload source evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: unresolved-security-skill-source-review
+          path: unresolved_output
+          include-hidden-files: true
+          if-no-files-found: error
+          retention-days: 7
+      - name: Propagate review failure after evidence upload
+        if: steps.review.outcome == 'failure'
+        run: exit 1
