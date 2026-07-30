@@ -1,0 +1,1 @@
+Temporary research branch for the SkillsMP portion of the security/vulnerability-detection skill marketplace audit. The workflow uses deterministic category-ranked popularity and recency frames, then integrates the prior ontology frame locally. It is not intended to be merged into the application repository.
