@@ -1,0 +1,38 @@
+name: Complete security skill metadata
+
+on:
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  metadata:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    env:
+      GITHUB_TOKEN: ${{ github.token }}
+      PYTHONUNBUFFERED: "1"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Resolve file creation history and repository metadata
+        id: resolve
+        continue-on-error: true
+        run: python complete_skill_metadata.py
+      - name: Upload metadata evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: completed-security-skill-metadata
+          path: metadata_completion_output
+          include-hidden-files: true
+          if-no-files-found: error
+          retention-days: 7
+      - name: Propagate resolver failure
+        if: steps.resolve.outcome == 'failure'
+        run: exit 1

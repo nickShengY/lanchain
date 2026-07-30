@@ -1,0 +1,266 @@
+[
+  {
+    "record_key": "nox-lumen-tech/combo-skills::semgrep/SKILL.md",
+    "repo": "Nox-Lumen-tech/combo-skills",
+    "path": "semgrep/SKILL.md",
+    "skill_name": "semgrep"
+  },
+  {
+    "record_key": "jeremylongshore/claude-code-plugins-plus-skills::skills/.curated/scanning-for-hardcoded-secrets/SKILL.md",
+    "repo": "jeremylongshore/claude-code-plugins-plus-skills",
+    "path": "skills/.curated/scanning-for-hardcoded-secrets/SKILL.md",
+    "skill_name": "scanning-for-hardcoded-secrets"
+  },
+  {
+    "record_key": "wgpsec/aboutsecurity::skills/cloud/k8s-webhook-abuse/SKILL.md",
+    "repo": "wgpsec/AboutSecurity",
+    "path": "skills/cloud/k8s-webhook-abuse/SKILL.md",
+    "skill_name": "k8s-webhook-abuse"
+  },
+  {
+    "record_key": "masriyan/claude-code-cybersecurity-skill::skills/10-cloud-security/SKILL.md",
+    "repo": "Masriyan/Claude-Code-CyberSecurity-Skill",
+    "path": "skills/10-cloud-security/SKILL.md",
+    "skill_name": "cloud-security-container-hardening"
+  },
+  {
+    "record_key": "owasp/secure-agent-playbook::plugins/code-security-skills/skills/iac-security-review/SKILL.md",
+    "repo": "OWASP/secure-agent-playbook",
+    "path": "plugins/code-security-skills/skills/iac-security-review/SKILL.md",
+    "skill_name": "iac-security-review"
+  },
+  {
+    "record_key": "agentsecops/secopsagentkit::skills/devsecops/iac-checkov/SKILL.md",
+    "repo": "AgentSecOps/SecOpsAgentKit",
+    "path": "skills/devsecops/iac-checkov/SKILL.md",
+    "skill_name": "iac-checkov"
+  },
+  {
+    "record_key": "hypnguyen1209/offensive-claude::skills/cloud-security/SKILL.md",
+    "repo": "hypnguyen1209/offensive-claude",
+    "path": "skills/cloud-security/SKILL.md",
+    "skill_name": "cloud-security"
+  },
+  {
+    "record_key": "christophacham/agent-skills-library::skills/security/iac-security/SKILL.md",
+    "repo": "christophacham/agent-skills-library",
+    "path": "skills/security/iac-security/SKILL.md",
+    "skill_name": "iac-security"
+  },
+  {
+    "record_key": "shulkwisec/bb-huge::skills/curated/codebase/SKILL.md",
+    "repo": "ShulkwiSEC/bb-huge",
+    "path": "skills/curated/codebase/SKILL.md",
+    "skill_name": "codebase"
+  },
+  {
+    "record_key": "killvxk/cybersecurity-skills-zh::skills/implementing-infrastructure-as-code-security-scanning/SKILL.md",
+    "repo": "killvxk/cybersecurity-skills-zh",
+    "path": "skills/implementing-infrastructure-as-code-security-scanning/SKILL.md",
+    "skill_name": "implementing-infrastructure-as-code-security-scanning"
+  },
+  {
+    "record_key": "hardw00t/ai-security-arsenal::skills/iac-security/SKILL.md",
+    "repo": "hardw00t/ai-security-arsenal",
+    "path": "skills/iac-security/SKILL.md",
+    "skill_name": "iac-security"
+  },
+  {
+    "record_key": "mukul975/anthropic-cybersecurity-skills::skills/detecting-oauth-token-theft/SKILL.md",
+    "repo": "mukul975/Anthropic-Cybersecurity-Skills",
+    "path": "skills/detecting-oauth-token-theft/SKILL.md",
+    "skill_name": "detecting-oauth-token-theft"
+  },
+  {
+    "record_key": "elementalsouls/claude-bughunter::skills/m365-entra-attack/SKILL.md",
+    "repo": "elementalsouls/Claude-BugHunter",
+    "path": "skills/m365-entra-attack/SKILL.md",
+    "skill_name": "m365-entra-attack"
+  },
+  {
+    "record_key": "yaklang/yaklang::common/ai/aid/aireact/skills/template-injection/SKILL.md",
+    "repo": "yaklang/yaklang",
+    "path": "common/ai/aid/aireact/skills/template-injection/SKILL.md",
+    "skill_name": "template-injection"
+  },
+  {
+    "record_key": "leoyeai/openclaw-master-skills::skills/0codekit/SKILL.md",
+    "repo": "LeoYeAI/openclaw-master-skills",
+    "path": "skills/sentinel-oleg/SKILL.md",
+    "skill_name": "claw-sentinel"
+  },
+  {
+    "record_key": "ed1s0nz/cyberstrikeai::skills/ai-llm-app-attack/SKILL.md",
+    "repo": "Ed1s0nZ/CyberStrikeAI",
+    "path": "skills/ai-llm-app-attack/SKILL.md",
+    "skill_name": "ai-llm-app-attack"
+  },
+  {
+    "record_key": "modu-ai/moai-adk::.claude/skills/moai-ref-llm-security/SKILL.md",
+    "repo": "modu-ai/moai-adk",
+    "path": ".claude/skills/moai-ref-llm-security/SKILL.md",
+    "skill_name": "moai-ref-llm-security"
+  },
+  {
+    "record_key": "briiirussell/cybersecurity-skills::skills/prompt-injection/SKILL.md",
+    "repo": "briiirussell/cybersecurity-skills",
+    "path": "skills/prompt-injection/SKILL.md",
+    "skill_name": "prompt-injection"
+  },
+  {
+    "record_key": "h-mmer/pentest-agents::skills/hunt-oauth/SKILL.md",
+    "repo": "H-mmer/pentest-agents",
+    "path": "skills/hunt-oauth/SKILL.md",
+    "skill_name": "hunt-oauth"
+  },
+  {
+    "record_key": "leoyeai/openclaw-master-skills::skills/mandate/SKILL.md",
+    "repo": "LeoYeAI/openclaw-master-skills",
+    "path": "skills/mandate/SKILL.md",
+    "skill_name": "mandate"
+  },
+  {
+    "record_key": "xalgord/xalgorix::internal/tools/skills/data/ai-security/testing-mcp-server-security/SKILL.md",
+    "repo": "xalgord/xalgorix",
+    "path": "internal/tools/skills/data/ai-security/testing-mcp-server-security/SKILL.md",
+    "skill_name": "testing-mcp-server-security"
+  },
+  {
+    "record_key": "leoyeai/openclaw-master-skills::skills/sx-self-safety-guard/SKILL.md",
+    "repo": "LeoYeAI/openclaw-master-skills",
+    "path": "skills/sx-self-safety-guard/SKILL.md",
+    "skill_name": "self-safety-guard"
+  },
+  {
+    "record_key": "unclecheng-li/vulnclaw::vulnclaw/skills/specialized/ai-mcp-security/SKILL.md",
+    "repo": "Unclecheng-li/VulnClaw",
+    "path": "vulnclaw/skills/specialized/ai-mcp-security/SKILL.md",
+    "skill_name": "ai-mcp-security"
+  },
+  {
+    "record_key": "purpleailab/decepticon::packages/decepticon/decepticon/skills/standard/ad/certipy-esc-chain/SKILL.md",
+    "repo": "PurpleAILAB/Decepticon",
+    "path": "packages/decepticon/decepticon/skills/standard/ad/certipy-esc-chain/SKILL.md",
+    "skill_name": "ad-certipy-esc-chain"
+  },
+  {
+    "record_key": "ferroxlabs/wayland::src/process/resources/skills-library/bodies/skills/software-engineering/mobile-security-engineer/SKILL.md",
+    "repo": "FerroxLabs/wayland",
+    "path": "src/process/resources/skills-library/bodies/skills/software-engineering/mobile-security-engineer/SKILL.md",
+    "skill_name": "mobile-security-engineer"
+  },
+  {
+    "record_key": "mukul975/anthropic-cybersecurity-skills::skills/analyzing-ios-app-security-with-objection/SKILL.md",
+    "repo": "mukul975/Anthropic-Cybersecurity-Skills",
+    "path": "skills/analyzing-ios-app-security-with-objection/SKILL.md",
+    "skill_name": "analyzing-ios-app-security-with-objection"
+  },
+  {
+    "record_key": "hoangnguyen0403/agent-skills-standard::skills/specialists/specialist-mobile-reverser/SKILL.md",
+    "repo": "HoangNguyen0403/agent-skills-standard",
+    "path": "skills/specialists/specialist-mobile-reverser/SKILL.md",
+    "skill_name": "specialist-mobile-reverser"
+  },
+  {
+    "record_key": "hoangnguyen0403/agent-skills-standard::skills/common/common-owasp/SKILL.md",
+    "repo": "HoangNguyen0403/agent-skills-standard",
+    "path": "skills/common/common-owasp/SKILL.md",
+    "skill_name": "common-owasp"
+  },
+  {
+    "record_key": "cyberstrikeus/cyberstrike::.cyberstrike/skill/mitre_attack/TA0005_defense-evasion/T1055.011_extra-window-memory-injection/SKILL.md",
+    "repo": "CyberStrikeus/CyberStrike",
+    "path": ".cyberstrike/skill/mitre_attack/TA0005_defense-evasion/T1055.011_extra-window-memory-injection/SKILL.md",
+    "skill_name": "t1055-011-extra-window-memory-injection"
+  },
+  {
+    "record_key": "xalgord/xalgorix::internal/tools/skills/data/binary-exploitation/exploiting-linux-kernel-vulnerabilities/SKILL.md",
+    "repo": "xalgord/xalgorix",
+    "path": "internal/tools/skills/data/binary-exploitation/exploiting-linux-kernel-vulnerabilities/SKILL.md",
+    "skill_name": "exploiting-linux-kernel-vulnerabilities"
+  },
+  {
+    "record_key": "zhaoxuya520/reverse-skill::skills/database-security/SKILL.md",
+    "repo": "zhaoxuya520/reverse-skill",
+    "path": "skills/database-security/SKILL.md",
+    "skill_name": "database-security"
+  },
+  {
+    "record_key": "elementalsouls/claude-bughunter::skills/hunt-cors/SKILL.md",
+    "repo": "elementalsouls/Claude-BugHunter",
+    "path": "skills/hunt-cors/SKILL.md",
+    "skill_name": "hunt-cors"
+  },
+  {
+    "record_key": "unclecheng-li/vulnclaw::vulnclaw/skills/specialized/redteam-cloud-detail-pack/SKILL.md",
+    "repo": "Unclecheng-li/VulnClaw",
+    "path": "vulnclaw/skills/specialized/redteam-cloud-detail-pack/SKILL.md",
+    "skill_name": "redteam-cloud-detail-pack"
+  },
+  {
+    "record_key": "hardw00t/ai-security-arsenal::skills/llm-security/SKILL.md",
+    "repo": "hardw00t/ai-security-arsenal",
+    "path": "skills/llm-security/SKILL.md",
+    "skill_name": "llm-security"
+  },
+  {
+    "record_key": "leoyeai/openclaw-master-skills::skills/phy-cors-audit/SKILL.md",
+    "repo": "LeoYeAI/openclaw-master-skills",
+    "path": "skills/phy-cors-audit/SKILL.md",
+    "skill_name": "phy-cors-audit"
+  },
+  {
+    "record_key": "a5c-ai/babysitter::library/specializations/security-compliance/skills/owasp-security-scanner/SKILL.md",
+    "repo": "a5c-ai/babysitter",
+    "path": "library/specializations/security-compliance/skills/owasp-security-scanner/SKILL.md",
+    "skill_name": "owasp-security-scanner"
+  },
+  {
+    "record_key": "uphiago/recon-skills::redteam/hunt-api-misconfig/SKILL.md",
+    "repo": "uphiago/recon-skills",
+    "path": "redteam/hunt-api-misconfig/SKILL.md",
+    "skill_name": "hunt-api-misconfig"
+  },
+  {
+    "record_key": "wgpsec/aboutsecurity::skills/exploit/auth/cors-misconfiguration/SKILL.md",
+    "repo": "wgpsec/AboutSecurity",
+    "path": "skills/exploit/auth/cors-misconfiguration/SKILL.md",
+    "skill_name": "cors-misconfiguration"
+  },
+  {
+    "record_key": "uphiago/recon-skills::redteam/cors-chain-automation/SKILL.md",
+    "repo": "uphiago/recon-skills",
+    "path": "redteam/cors-chain-automation/SKILL.md",
+    "skill_name": "cors-chain-automation"
+  },
+  {
+    "record_key": "cyberstrikeus/cyberstrike::.cyberstrike/skill/attack-cors/SKILL.md",
+    "repo": "CyberStrikeus/CyberStrike",
+    "path": ".cyberstrike/skill/attack-cors/SKILL.md",
+    "skill_name": "attack-cors"
+  },
+  {
+    "record_key": "dicklesworthstone/pi_agent_rust::tests/ext_conformance/artifacts/plugins-community/plugins/security/cors-policy-validator/skills/validating-cors-policies/SKILL.md",
+    "repo": "Dicklesworthstone/pi_agent_rust",
+    "path": "tests/ext_conformance/artifacts/plugins-community/plugins/security/cors-policy-validator/skills/validating-cors-policies/SKILL.md",
+    "skill_name": "validating-cors-policies"
+  },
+  {
+    "record_key": "xalgord/xalgorix::internal/tools/skills/data/penetration-testing/executing-active-directory-attack-simulation/SKILL.md",
+    "repo": "xalgord/xalgorix",
+    "path": "internal/tools/skills/data/penetration-testing/executing-active-directory-attack-simulation/SKILL.md",
+    "skill_name": "executing-active-directory-attack-simulation"
+  },
+  {
+    "record_key": "xalgord/xalgorix::internal/tools/skills/data/web-application-security/performing-content-security-policy-bypass/SKILL.md",
+    "repo": "xalgord/xalgorix",
+    "path": "internal/tools/skills/data/web-application-security/performing-content-security-policy-bypass/SKILL.md",
+    "skill_name": "performing-content-security-policy-bypass"
+  },
+  {
+    "record_key": "dicklesworthstone/pi_agent_rust::tests/ext_conformance/artifacts/plugins-community/plugins/security/access-control-auditor/skills/auditing-access-control/SKILL.md",
+    "repo": "Dicklesworthstone/pi_agent_rust",
+    "path": "tests/ext_conformance/artifacts/plugins-community/plugins/security/access-control-auditor/skills/auditing-access-control/SKILL.md",
+    "skill_name": "auditing-access-control"
+  }
+]
