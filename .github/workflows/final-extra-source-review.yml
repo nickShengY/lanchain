@@ -1,0 +1,38 @@
+name: Final security-skill false-negative source review
+
+on:
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  review:
+    runs-on: ubuntu-latest
+    timeout-minutes: 180
+    env:
+      GITHUB_TOKEN: ${{ github.token }}
+      PYTHONUNBUFFERED: "1"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Review every final candidate source
+        id: review
+        continue-on-error: true
+        run: python extra_source_review.py
+      - name: Upload source evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: final-security-skill-false-negative-review
+          path: extra_source_review_output
+          include-hidden-files: true
+          if-no-files-found: error
+          retention-days: 7
+      - name: Propagate review failure
+        if: steps.review.outcome == 'failure'
+        run: exit 1
