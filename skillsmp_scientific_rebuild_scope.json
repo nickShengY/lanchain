@@ -1,0 +1,10 @@
+{
+  "snapshot_date": "2026-07-30",
+  "category": "testing-security",
+  "frames": [
+    {"name": "stars", "query": "*", "sortBy": "stars", "pages": "1-25", "limit": 50},
+    {"name": "recent", "query": "*", "sortBy": "recent", "pages": "1-25", "limit": 50}
+  ],
+  "local_merge_frame": "prior preregistered security-ontology query union",
+  "interpretation": "reproducible multi-frame coverage study, not a full catalog census or probability sample"
+}
