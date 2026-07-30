@@ -2,18 +2,25 @@
 
 Snapshot protocol for the improved marketplace audit.
 
+## Technical constraint established by pilot
+
+The documented SkillsMP search endpoint requires a query containing at least one letter or number. A category-wide wildcard request using `q=*` was rejected with `INVALID_QUERY`. Therefore, SkillsMP does not provide an unrestricted category listing through this API, and the study does not claim a full category census or a probability sample.
+
 ## Retrieval frames
 
-1. **Popularity frame:** `q=*`, category `testing-security`, `sortBy=stars`, pages 1–25, limit 50. This deterministically captures the top 1,250 category-ranked results by GitHub repository stars returned by the documented SkillsMP API.
-2. **Recency frame:** the same category-wide wildcard query with `sortBy=recent`, pages 1–25, limit 50. This captures the 1,250 most recently updated category results.
-3. **Ontology frame:** the previously collected, preregistered security/vulnerability search-query union is integrated locally after the ranked-frame run. It covers security domains and techniques that may not appear in the popularity or recency frames.
+A preregistered, equal-budget ontology of 25 security domains was derived from OWASP, CWE, NIST, MITRE ATT&CK, CIS, CSA, SLSA and related security frameworks. Each domain receives exactly two API calls under the `testing-security` category filter:
 
-The union is not called a full SkillsMP Security-category census or a probability sample. It is a reproducible multi-frame coverage study designed to represent popularity, recency, and domain terminology separately.
+1. **Popularity frame:** the 50 top-star-ranked matches for the stratum query.
+2. **Recency frame:** the 50 most-recent matches for the same query.
+
+The 25 strata cover general security, vulnerability assessment, application review, web/API security, access control, injection, penetration testing, fuzzing, SAST, taint/data flow, dependency/SBOM, supply chain, secrets, cloud, IaC/container/Kubernetes, network/host, mobile, binary/firmware/memory, smart contracts, malware, threat detection, forensics, AI/LLM/agent/MCP, detection engineering and vulnerability intelligence.
+
+A third, earlier high-recall ontology-query frame is integrated locally as a sensitivity supplement. The final SkillsMP corpus is the deduplicated union of all three frames.
 
 ## Source review
 
-Every unique record in the two category-ranked frames is source-resolved and reviewed; keyword screening is measured diagnostically but does not remove records before GitHub source review. The audit retrieves the real `SKILL.md`, reviews adjacent implementation/reference files for included candidates, records GitHub file history, removes inactive sources and deduplicates translations, aliases, mirrors, and conservative near-copies.
+Every unique listing returned by the new paired frames is resolved to its actual GitHub `SKILL.md` and reviewed. Keyword screening is measured diagnostically but does not remove a ranked-frame record before source review. Included candidates receive file-history checks, adjacent-file inspection, evidence excerpts, dual classification and conservative duplicate detection.
 
 ## Diagnostics
 
-The run records API request parameters and raw responses, frame overlap, page-level marginal yield, saturation, source-resolution rates, source-level decisions, description-screen false negatives, classification counts, duplicate groups, and local evidence for every reviewed record.
+The run records raw API responses, query parameters, standards justification, per-stratum marginal yield, cumulative saturation, popularity/recency overlap, source resolution, description-screen false negatives, inclusion/exclusion decisions, classifications and local evidence.
