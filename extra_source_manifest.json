@@ -1,0 +1,242 @@
+[
+  {
+    "occurrence_id": "CM-00047",
+    "marketplace": "ClaudeMarketplaces",
+    "marketplace_url": "https://claudemarketplaces.com/skills/okx/onchainos-skills/okx-security",
+    "marketplace_description": "This is OKX's security scanner for web3 operations. It covers five main areas: token risk analysis (honeypot detection, tax checks), DApp phishing detection, tr",
+    "repo": "okx/onchainos-skills",
+    "skill_name": "okx-security",
+    "path_hint": "skills/okx-security",
+    "ref": ""
+  },
+  {
+    "occurrence_id": "CM-00051",
+    "marketplace": "ClaudeMarketplaces",
+    "marketplace_url": "https://claudemarketplaces.com/skills/affaan-m/everything-claude-code/security-scan",
+    "marketplace_description": "The security-scan skill audits Claude Code project configurations for vulnerabilities, misconfigurations, and injection risks by scanning the `.claude/` directo",
+    "repo": "affaan-m/everything-claude-code",
+    "skill_name": "security-scan",
+    "path_hint": "skills/security-scan",
+    "ref": ""
+  },
+  {
+    "occurrence_id": "CM-00058",
+    "marketplace": "ClaudeMarketplaces",
+    "marketplace_url": "https://claudemarketplaces.com/skills/affaan-m/everything-claude-code/security-bounty-hunter",
+    "marketplace_description": "This is for when you're actually submitting bounty reports, not running a general security audit. It filters out the noise that platforms reject anyway: local-o",
+    "repo": "affaan-m/everything-claude-code",
+    "skill_name": "security-bounty-hunter",
+    "path_hint": "skills/security-bounty-hunter",
+    "ref": ""
+  },
+  {
+    "occurrence_id": "SM-00058",
+    "marketplace": "SkillsMP",
+    "marketplace_url": "https://skillsmp.com/creators/davila7/claude-code-templates/cli-tool-components-skills-security-broken-authentication",
+    "marketplace_description": "This skill should be used when the user asks to \"test for broken authentication vulnerabilities\", \"assess session management security\", \"perform credential stuffing tests\", \"evaluate password policies\", \"test for session fixation\", or \"identify authentication bypass flaws\". It provides comprehensive techniques for identifying authentication and session management weaknesses in web applications.",
+    "repo": "davila7/claude-code-templates",
+    "skill_name": "broken-authentication-testing",
+    "path_hint": "cli-tool/components/skills/security/broken-authentication",
+    "ref": ""
+  },
+  {
+    "occurrence_id": "SM-00300",
+    "marketplace": "SkillsMP",
+    "marketplace_url": "https://skillsmp.com/creators/purpleailab/decepticon/packages-decepticon-decepticon-skills-standard-exploit-web-ssrf",
+    "marketplace_description": "Server-Side Request Forgery (SSRF) — exploiting server-side URL fetching to access internal services, cloud metadata (AWS/GCP/Azure), internal APIs, and port scanning. Covers IP bypass techniques, DNS rebinding, Gopher protocol smuggling, and redirect-based bypass.",
+    "repo": "PurpleAILAB/Decepticon",
+    "skill_name": "exploit-ssrf",
+    "path_hint": "packages/decepticon/decepticon/skills/standard/exploit/web/ssrf",
+    "ref": ""
+  },
+  {
+    "occurrence_id": "SM-00397",
+    "marketplace": "SkillsMP",
+    "marketplace_url": "https://skillsmp.com/creators/purpleailab/decepticon/packages-decepticon-decepticon-skills-standard-exploit-web-idor",
+    "marketplace_description": "Insecure Direct Object References (IDOR) — authorization bypass through predictable object references (sequential IDs, UUIDs, filenames, encoded IDs). Covers horizontal/vertical privilege escalation, ID enumeration, HTTP method tampering, and JWT sub claim manipulation.",
+    "repo": "PurpleAILAB/Decepticon",
+    "skill_name": "exploit-idor",
+    "path_hint": "packages/decepticon/decepticon/skills/standard/exploit/web/idor",
+    "ref": ""
+  },
+  {
+    "occurrence_id": "SM-00456",
+    "marketplace": "SkillsMP",
+    "marketplace_url": "https://skillsmp.com/creators/purpleailab/decepticon/packages-decepticon-decepticon-skills-standard-supply-chain",
+    "marketplace_description": "Use when the engagement scope includes supply-chain attack simulation — typosquatted package publication, dependency confusion, GitHub Actions secret mining, internal mirror poisoning, OAuth-app impersonation, or vendor portal credential abuse.",
+    "repo": "PurpleAILAB/Decepticon",
+    "skill_name": "supply-chain-overview",
+    "path_hint": "packages/decepticon/decepticon/skills/standard/supply-chain",
+    "ref": ""
+  },
+  {
+    "occurrence_id": "SM-00517",
+    "marketplace": "SkillsMP",
+    "marketplace_url": "https://skillsmp.com/creators/x-cmd/x-cmd/mod-kev",
+    "marketplace_description": "CISA Known Exploited Vulnerabilities (KEV) catalog.\nList actively exploited vulnerabilities prioritized by CISA.\n\n**Dependency**: This is an x-cmd module. Install x-cmd first (see x-cmd skill for installation options).\nsee x-cmd skill for installation.",
+    "repo": "x-cmd/x-cmd",
+    "skill_name": "x-kev",
+    "path_hint": "mod/kev",
+    "ref": "X"
+  },
+  {
+    "occurrence_id": "SM-00755",
+    "marketplace": "SkillsMP",
+    "marketplace_url": "https://skillsmp.com/creators/abelrguezr/hacktricks-skills/skills-mobile-pentesting-ios-pentesting-basic-ios-testing-operations-skill-md",
+    "marketplace_description": "iOS security testing operations including device identification, shell access, data transfer, app extraction, and decryption. Use this skill whenever the user needs to perform iOS pentesting tasks, identify iOS devices, access device shells, transfer data from iOS devices, extract or decrypt iOS apps, or install apps on iOS devices. Trigger for any iOS security assessment, mobile app testing, or iOS device forensics work.",
+    "repo": "abelrguezr/hacktricks-skills",
+    "skill_name": "ios-pentesting-basics",
+    "path_hint": "skills/mobile-pentesting/ios-pentesting/basic-ios-testing-operations",
+    "ref": ""
+  },
+  {
+    "occurrence_id": "SM-01018",
+    "marketplace": "SkillsMP",
+    "marketplace_url": "https://skillsmp.com/creators/eltonssouza/conductor-main/conductor-templates-skills-review-app-security",
+    "marketplace_description": "Use to assess the security of an application, by mapping the attack surface, testing against current OWASP standards (ASVS/Top 10) as returned by the library, performing taint analysis, and delivering findings with severity, PoC, and concrete fix — grounding every check in the library via cdt library.",
+    "repo": "eltonssouza/conductor-main",
+    "skill_name": "review-app-security",
+    "path_hint": "conductor/templates/skills/review-app-security",
+    "ref": ""
+  },
+  {
+    "occurrence_id": "SM-01088",
+    "marketplace": "SkillsMP",
+    "marketplace_url": "https://skillsmp.com/creators/yhy0/ghsa-skill-builder/vuln-skills-skills-go-vuln-auth-bypass",
+    "marketplace_description": "Use when auditing Go code involving authentication flows, RBAC policies, Kubernetes admission webhooks, JWT/OAuth token validation, or privilege escalation in cloud-native infrastructure. Covers CWE-287/863/269/284/285/862. Keywords: authentication bypass, authorization bypass, RBAC, admission webhook, JWT, OAuth, privilege escalation, Rancher, Kyverno, impersonation, namespace isolation, middleware auth",
+    "repo": "yhy0/ghsa-skill-builder",
+    "skill_name": "go-vuln-auth-bypass",
+    "path_hint": "vuln-skills/skills/go-vuln-auth-bypass",
+    "ref": ""
+  },
+  {
+    "occurrence_id": "SM-01097",
+    "marketplace": "SkillsMP",
+    "marketplace_url": "https://skillsmp.com/creators/senaykt/iac-security-scan-skills/agents-skills-iac-serverless",
+    "marketplace_description": "Serverless security analysis for AWS IaC. Detects insecure Lambda/API Gateway/Function URL exposure, overprivileged execution roles, event injection, privilege escalation via orchestration, denial-of-wallet, and serverless persistence. No remediation.",
+    "repo": "senaykt/iac-security-scan-skills",
+    "skill_name": "iac-serverless",
+    "path_hint": ".agents/skills/iac-serverless",
+    "ref": ""
+  },
+  {
+    "occurrence_id": "SM-01098",
+    "marketplace": "SkillsMP",
+    "marketplace_url": "https://skillsmp.com/creators/senaykt/iac-security-scan-skills/agents-skills-iac-secrets",
+    "marketplace_description": "Secrets and credentials analysis for IaC and CI/CD. Detects hardcoded keys, plaintext env vars, state file risks. Contextual validation — not regex-only. Correlates with IAM, network, storage. No remediation.",
+    "repo": "senaykt/iac-security-scan-skills",
+    "skill_name": "iac-secrets",
+    "path_hint": ".agents/skills/iac-secrets",
+    "ref": ""
+  },
+  {
+    "occurrence_id": "SM-01101",
+    "marketplace": "SkillsMP",
+    "marketplace_url": "https://skillsmp.com/creators/javimosch/supercli/plugins-kics-skills-quickstart",
+    "marketplace_description": "KICS — infrastructure code scanning tool for IaC security.",
+    "repo": "javimosch/supercli",
+    "skill_name": "kics",
+    "path_hint": "plugins/kics/skills/quickstart",
+    "ref": "master"
+  },
+  {
+    "occurrence_id": "SM-01176",
+    "marketplace": "SkillsMP",
+    "marketplace_url": "https://skillsmp.com/creators/scstelz/security-investigator/github-skills-threat-pulse",
+    "marketplace_description": "Recommended starting point for new users and daily SOC operations. 15-minute broad security scan across 7 domains (incidents, identity, NHI, endpoint, email, admin/cloud, exposure) producing a Threat Pulse Dashboard with drill-down recommendations to specialized skills. Trigger on getting-started questions like \"where do I start\", \"what can you do\", \"help me investigate\".",
+    "repo": "SCStelz/security-investigator",
+    "skill_name": "threat-pulse",
+    "path_hint": ".github/skills/threat-pulse",
+    "ref": ""
+  },
+  {
+    "occurrence_id": "SM-01240",
+    "marketplace": "SkillsMP",
+    "marketplace_url": "https://skillsmp.com/creators/aradotso/security-skills/skills-solana-security-standard",
+    "marketplace_description": "Use the SOL-0XX Solana security standard to scan, detect, and prevent 37 classes of Solana program vulnerabilities ($514M+ in real exploits) across AI tools, editors, CLI, and CI",
+    "repo": "Aradotso/security-skills",
+    "skill_name": "solana-security-standard",
+    "path_hint": "skills/solana-security-standard",
+    "ref": ""
+  },
+  {
+    "occurrence_id": "SM-01263",
+    "marketplace": "SkillsMP",
+    "marketplace_url": "https://skillsmp.com/creators/leoyeai/openclaw-master-skills/skills-og-openclawguard-test",
+    "marketplace_description": "Runtime security plugin for AI agents. Provides local-first protection against data exfiltration, credential theft, command injection, and sensitive data leakage. Includes a free AI Security Gateway that sanitizes PII before it reaches LLM providers. Fully open source (Apache 2.0) — all detection and sanitization logic is auditable on GitHub. Source: github.com/openguardrails/openguardrails",
+    "repo": "LeoYeAI/openclaw-master-skills",
+    "skill_name": "openguardrails",
+    "path_hint": "skills/og-openclawguard-test",
+    "ref": ""
+  },
+  {
+    "occurrence_id": "SM-01056",
+    "marketplace": "SkillsMP",
+    "marketplace_url": "https://skillsmp.com/creators/kubernetes-sigs/kueue/cmd-experimental-skills-reviewer-security-input-validation",
+    "marketplace_description": "Flag missing input validation at trust boundaries — user-settable CR fields, webhook payloads, labels, annotations, or untrusted deserialization (CWE-20, CWE-502).",
+    "repo": "kubernetes-sigs/kueue",
+    "skill_name": "input-validation",
+    "path_hint": "cmd/experimental/skills/reviewer/security/input-validation",
+    "ref": ""
+  },
+  {
+    "occurrence_id": "SM-01057",
+    "marketplace": "SkillsMP",
+    "marketplace_url": "https://skillsmp.com/creators/kubernetes-sigs/kueue/cmd-experimental-skills-reviewer-security-integration-adapter-trust-boundary",
+    "marketplace_description": "Flag integration adapters reading credential-like fields from third-party CRDs without treating them as untrusted (RayCluster, SparkApplication, JobSet).",
+    "repo": "kubernetes-sigs/kueue",
+    "skill_name": "integration-adapter-trust-boundary",
+    "path_hint": "cmd/experimental/skills/reviewer/security/integration-adapter-trust-boundary",
+    "ref": ""
+  },
+  {
+    "occurrence_id": "CS-01617",
+    "marketplace": "ClaudeSkills.info",
+    "marketplace_url": "https://claudeskills.info/skills/mukul975/Anthropic-Cybersecurity-Skills/building-cloud-security-posture-management/",
+    "marketplace_description": "817 structured cybersecurity skills for AI agents · Mapped to 6 frameworks: MITRE ATT&CK, NIST CSF 2.0, MITRE ATLAS, D3FEND, NIST AI RMF & MITRE F3 (Fight Fraud) · agentskills.io standard · Works with Claude Code, GitHub Copilot, Codex CLI, Cursor, Gemini CLI & 20+ platforms · 29 security domains · Apache 2.0",
+    "repo": "mukul975/Anthropic-Cybersecurity-Skills",
+    "skill_name": "building-cloud-security-posture-management",
+    "path_hint": "skills/building-cloud-security-posture-management",
+    "ref": ""
+  },
+  {
+    "occurrence_id": "CS-01633",
+    "marketplace": "ClaudeSkills.info",
+    "marketplace_url": "https://claudeskills.info/skills/mukul975/Anthropic-Cybersecurity-Skills/conducting-cloud-infrastructure-penetration-test/",
+    "marketplace_description": "817 structured cybersecurity skills for AI agents · Mapped to 6 frameworks: MITRE ATT&CK, NIST CSF 2.0, MITRE ATLAS, D3FEND, NIST AI RMF & MITRE F3 (Fight Fraud) · agentskills.io standard · Works with Claude Code, GitHub Copilot, Codex CLI, Cursor, Gemini CLI & 20+ platforms · 29 security domains · Apache 2.0",
+    "repo": "mukul975/Anthropic-Cybersecurity-Skills",
+    "skill_name": "conducting-cloud-infrastructure-penetration-test",
+    "path_hint": "skills/conducting-cloud-infrastructure-penetration-test",
+    "ref": ""
+  },
+  {
+    "occurrence_id": "CS-01713",
+    "marketplace": "ClaudeSkills.info",
+    "marketplace_url": "https://claudeskills.info/skills/mukul975/Anthropic-Cybersecurity-Skills/detecting-cloud-cryptomining-activity/",
+    "marketplace_description": "817 structured cybersecurity skills for AI agents · Mapped to 6 frameworks: MITRE ATT&CK, NIST CSF 2.0, MITRE ATLAS, D3FEND, NIST AI RMF & MITRE F3 (Fight Fraud) · agentskills.io standard · Works with Claude Code, GitHub Copilot, Codex CLI, Cursor, Gemini CLI & 20+ platforms · 29 security domains · Apache 2.0",
+    "repo": "mukul975/Anthropic-Cybersecurity-Skills",
+    "skill_name": "detecting-cloud-cryptomining-activity",
+    "path_hint": "skills/detecting-cloud-cryptomining-activity",
+    "ref": ""
+  },
+  {
+    "occurrence_id": "CS-01714",
+    "marketplace": "ClaudeSkills.info",
+    "marketplace_url": "https://claudeskills.info/skills/mukul975/Anthropic-Cybersecurity-Skills/hunting-living-off-the-land-binaries/",
+    "marketplace_description": "817 structured cybersecurity skills for AI agents · Mapped to 6 frameworks: MITRE ATT&CK, NIST CSF 2.0, MITRE ATLAS, D3FEND, NIST AI RMF & MITRE F3 (Fight Fraud) · agentskills.io standard · Works with Claude Code, GitHub Copilot, Codex CLI, Cursor, Gemini CLI & 20+ platforms · 29 security domains · Apache 2.0",
+    "repo": "mukul975/Anthropic-Cybersecurity-Skills",
+    "skill_name": "hunting-living-off-the-land-binaries",
+    "path_hint": "skills/hunting-living-off-the-land-binaries",
+    "ref": ""
+  },
+  {
+    "occurrence_id": "CS-01746",
+    "marketplace": "ClaudeSkills.info",
+    "marketplace_url": "https://claudeskills.info/skills/mukul975/Anthropic-Cybersecurity-Skills/hunting-for-webshells-in-web-servers/",
+    "marketplace_description": "817 structured cybersecurity skills for AI agents · Mapped to 6 frameworks: MITRE ATT&CK, NIST CSF 2.0, MITRE ATLAS, D3FEND, NIST AI RMF & MITRE F3 (Fight Fraud) · agentskills.io standard · Works with Claude Code, GitHub Copilot, Codex CLI, Cursor, Gemini CLI & 20+ platforms · 29 security domains · Apache 2.0",
+    "repo": "mukul975/Anthropic-Cybersecurity-Skills",
+    "skill_name": "hunting-for-webshells-in-web-servers",
+    "path_hint": "skills/hunting-for-webshells-in-web-servers",
+    "ref": ""
+  }
+]

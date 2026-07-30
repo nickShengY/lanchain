@@ -1,0 +1,57 @@
+name: Final security-skill false-negative source review
+
+on:
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  review:
+    runs-on: ubuntu-latest
+    timeout-minutes: 180
+    env:
+      GITHUB_TOKEN: ${{ github.token }}
+      PYTHONUNBUFFERED: "1"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Correct renamed or consolidated skill paths
+        run: |
+          python - <<'PY'
+          import json
+          path='extra_source_manifest.json'
+          records=json.load(open(path,encoding='utf-8'))
+          corrected={
+            'CM-00047':'skills/okx-agentic-wallet',
+            'CS-01617':'skills/implementing-cloud-security-posture-management',
+            'CS-01633':'skills/conducting-cloud-penetration-testing',
+            'CS-01713':'skills/detecting-cryptomining-in-cloud',
+            'CS-01714':'skills/hunting-for-living-off-the-land-binaries',
+            'CS-01746':'skills/hunting-for-webshell-activity',
+          }
+          for record in records:
+              if record['occurrence_id'] in corrected:
+                  record['path_hint']=corrected[record['occurrence_id']]
+          json.dump(records,open(path,'w',encoding='utf-8'),ensure_ascii=False,indent=2)
+          PY
+      - name: Review every final candidate source
+        id: review
+        continue-on-error: true
+        run: python extra_source_review.py
+      - name: Upload source evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: final-security-skill-false-negative-review
+          path: extra_source_review_output
+          include-hidden-files: true
+          if-no-files-found: error
+          retention-days: 7
+      - name: Propagate review failure
+        if: steps.review.outcome == 'failure'
+        run: exit 1
