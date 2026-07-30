@@ -1,0 +1,55 @@
+name: SkillsMP scientific security rebuild corrected
+
+on:
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  collect-review:
+    runs-on: ubuntu-latest
+    timeout-minutes: 330
+    env:
+      GITHUB_TOKEN: ${{ github.token }}
+      PYTHONUNBUFFERED: "1"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install dependencies
+        run: python -m pip install --disable-pip-version-check requests
+      - name: Decode corrected scientific collectors
+        run: |
+          base64 -d skillsmp_collect_corrected.py.gz.b64 | gzip -d > skillsmp_collect_corrected.py
+          base64 -d skillsmp_validate_corrected.py.gz.b64 | gzip -d > skillsmp_validate_corrected.py
+          python -m py_compile skillsmp_collect_corrected.py skillsmp_review.py skillsmp_validate_corrected.py
+      - name: Collect non-empty category-filtered paired frames
+        id: collect
+        continue-on-error: true
+        run: python skillsmp_collect_corrected.py
+      - name: Source-review every unique ranked-frame listing
+        id: review
+        if: steps.collect.outcome == 'success'
+        continue-on-error: true
+        run: python skillsmp_review.py
+      - name: Enforce scientific completion gate
+        id: validate
+        if: steps.collect.outcome == 'success' && steps.review.outcome == 'success'
+        continue-on-error: true
+        run: python skillsmp_validate_corrected.py
+      - name: Upload corrected scientific SkillsMP evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: skillsmp-scientific-security-rebuild-corrected
+          path: skillsmp_scientific_output
+          include-hidden-files: true
+          if-no-files-found: error
+          retention-days: 7
+      - name: Propagate failure after evidence upload
+        if: steps.collect.outcome == 'failure' || steps.review.outcome == 'failure' || steps.validate.outcome == 'failure'
+        run: exit 1
