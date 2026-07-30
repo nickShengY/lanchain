@@ -1,0 +1,68 @@
+name: SkillsMP implementation evidence review
+
+on:
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  actions: read
+  contents: read
+
+jobs:
+  enhance:
+    runs-on: ubuntu-latest
+    timeout-minutes: 330
+    env:
+      GH_TOKEN: ${{ github.token }}
+      GITHUB_TOKEN: ${{ github.token }}
+      PYTHONUNBUFFERED: "1"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install dependencies
+        run: python -m pip install --disable-pip-version-check requests
+      - name: Wait for corrected SkillsMP source review
+        run: gh run watch 30552891766 --repo nickShengY/lanchain --exit-status
+      - name: Download corrected scientific artifact
+        run: |
+          mkdir -p input
+          gh run download 30552891766 --repo nickShengY/lanchain --name skillsmp-scientific-security-corrected --dir input
+          test -s input/source_review_all.csv
+          test -s input/canonical_skills.csv
+          test -s input/scientific_diagnostics.json
+      - name: Review adjacent implementation, rule, workflow, and reference files
+        id: enhance
+        continue-on-error: true
+        run: python enhance_skillsmp_evidence.py
+      - name: Validate evidence enhancement
+        id: validate
+        if: steps.enhance.outcome == 'success'
+        continue-on-error: true
+        run: |
+          python - <<'PY'
+          import csv,json
+          from pathlib import Path
+          out=Path('skillsmp_enhanced_output')
+          diag=json.loads((out/'scientific_diagnostics.json').read_text(encoding='utf-8'))
+          rows=list(csv.DictReader((out/'source_review_all.csv').open(encoding='utf-8-sig',newline='')))
+          assert int(diag['implementation_records_reviewed']) == len(rows) > 0, diag
+          assert 'supporting_files_materialized' in rows[0], rows[0].keys()
+          assert 'implementation_review_depth' in rows[0], rows[0].keys()
+          assert (out/'canonical_skills.csv').stat().st_size > 100, 'empty canonical table'
+          print(json.dumps(diag,ensure_ascii=False,indent=2))
+          PY
+      - name: Upload enhanced SkillsMP source evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: skillsmp-scientific-security-enhanced
+          path: skillsmp_enhanced_output
+          include-hidden-files: true
+          if-no-files-found: error
+          retention-days: 7
+      - name: Propagate enhancement failure
+        if: steps.enhance.outcome == 'failure' || steps.validate.outcome == 'failure'
+        run: exit 1
