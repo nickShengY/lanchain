@@ -22,15 +22,22 @@ jobs:
           python-version: "3.12"
       - name: Install dependencies
         run: python -m pip install --disable-pip-version-check requests
+      - name: Apply validated SkillsMP API compatibility patch
+        run: |
+          # Pilot evidence: q=* is rejected and category=testing-security returns zero
+          # for otherwise productive security queries. Run the preregistered ontology
+          # across SkillsMP without asserting a nonfunctional category filter.
+          sed -i 's/CATEGORY = "testing-security"/CATEGORY = ""/' skillsmp_collect.py
+          sed -i '/^[[:space:]]*"category": CATEGORY,[[:space:]]*$/d' skillsmp_collect.py
       - name: Compile collectors
         run: |
           python -m py_compile skillsmp_collect.py
           python -m py_compile skillsmp_review.py
-      - name: Collect deterministic category-ranked SkillsMP frames
+      - name: Collect balanced ontology-stratified SkillsMP frames
         id: collect
         continue-on-error: true
         run: python skillsmp_collect.py
-      - name: Source-review every unique ranked-frame listing
+      - name: Source-review every unique returned listing
         id: review
         if: steps.collect.outcome == 'success'
         continue-on-error: true
