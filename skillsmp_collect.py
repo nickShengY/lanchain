@@ -17,12 +17,43 @@ RAW.mkdir(exist_ok=True)
 
 CATEGORY = "testing-security"
 LIMIT = 50
-PAGES_PER_FRAME = 25
 SLEEP_SECONDS = 6.4
 HEADERS = {
     "Accept": "application/json",
-    "User-Agent": "skillsmp-scientific-security-audit/2.1",
+    "User-Agent": "skillsmp-scientific-security-audit/2.2",
 }
+
+# Preregistered equal-budget ontology strata. Each stratum receives one
+# top-starred retrieval and one most-recent retrieval under the same category,
+# page and result-limit settings. The standards field documents why each
+# retrieval stratum exists instead of presenting the query list as ad hoc.
+STRATA = [
+    ("general_security", "security", "NIST CSF all functions; general security assessment"),
+    ("vulnerability_assessment", "vulnerability", "NIST CSF ID.RA; vulnerability discovery and assessment"),
+    ("application_code_review", "security audit", "OWASP ASVS; application and source-code review"),
+    ("web_api_security", "OWASP", "OWASP Top 10, ASVS and API Security Top 10"),
+    ("access_control_identity", "authorization", "OWASP A01; CWE-284/285/862/863"),
+    ("injection_input_validation", "injection", "OWASP A03; CWE-20/74/89/79"),
+    ("dynamic_pentest", "penetration testing", "OWASP WSTG; active adversarial assessment"),
+    ("fuzzing_property_testing", "fuzzing", "CWE discovery through fuzz and property-based testing"),
+    ("static_analysis_sast", "static analysis", "SAST and query-based source analysis"),
+    ("dataflow_taint", "taint analysis", "Interprocedural source-to-sink and data-flow analysis"),
+    ("dependency_sca_sbom", "SBOM", "OWASP A06; SCA, component inventory and advisory mapping"),
+    ("software_supply_chain", "supply chain", "SLSA and NIST SSDF supply-chain risk"),
+    ("secrets_credentials", "secret scanning", "CWE-798/522; leaked credential and key discovery"),
+    ("cloud_security", "cloud security", "CSA CCM and cloud security-posture assessment"),
+    ("iac_container_kubernetes", "Kubernetes security", "CIS Kubernetes/Container benchmarks and IaC"),
+    ("network_host_infrastructure", "network security", "NIST SP 800-115 network/host assessment"),
+    ("mobile_security", "mobile security", "OWASP MASVS and MASTG"),
+    ("binary_firmware_memory", "binary analysis", "CWE memory safety; binary and firmware analysis"),
+    ("smart_contract_blockchain", "smart contract security", "OWASP Smart Contract Top 10 and SWC"),
+    ("malware_reverse_engineering", "malware analysis", "MITRE ATT&CK malware and reverse analysis"),
+    ("threat_detection_hunting", "threat detection", "MITRE ATT&CK detection and threat hunting"),
+    ("forensics_incident_investigation", "digital forensics", "NIST SP 800-61 and forensic investigation"),
+    ("ai_llm_agent_mcp", "prompt injection", "OWASP LLM Top 10 and agent/MCP security"),
+    ("detection_engineering", "YARA", "Detection-rule, signature and query engineering"),
+    ("vulnerability_intelligence", "CVE", "CVE/NVD/CISA KEV vulnerability intelligence"),
+]
 
 
 def rows_from(payload: Any) -> list[dict]:
@@ -51,12 +82,12 @@ def pagination_from(payload: Any) -> dict:
     return payload.get("pagination") if isinstance(payload.get("pagination"), dict) else {}
 
 
-def get_page(sort_by: str, page: int):
+def get_query(query: str, sort_by: str):
     params = {
-        "q": "*",
+        "q": query,
         "category": CATEGORY,
         "sortBy": sort_by,
-        "page": page,
+        "page": 1,
         "limit": LIMIT,
     }
     last = ""
@@ -96,18 +127,21 @@ logs: list[dict] = []
 calls = 0
 
 for frame, sort_by in (("stars", "stars"), ("recent", "recent")):
-    for page in range(1, PAGES_PER_FRAME + 1):
-        payload, items, status, url, headers = get_page(sort_by, page)
+    for query_order, (stratum, query, standards_basis) in enumerate(STRATA, 1):
+        payload, items, status, url, headers = get_query(query, sort_by)
         calls += 1
-        raw_path = RAW / f"{frame}_page_{page:02d}.json"
+        raw_path = RAW / f"{frame}_{query_order:02d}_{stratum}.json"
         raw_path.write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
         pagination = pagination_from(payload)
         logs.append({
             "frame": frame,
-            "query": "*",
+            "stratum": stratum,
+            "query": query,
+            "standards_basis": standards_basis,
+            "query_order": query_order,
             "category": CATEGORY,
             "sort_by": sort_by,
-            "page": page,
+            "page": 1,
             "limit": LIMIT,
             "status": status,
             "returned": len(items),
@@ -119,9 +153,8 @@ for frame, sort_by in (("stars", "stars"), ("recent", "recent")):
             "raw_file": str(raw_path),
         })
         if status != 200:
-            raise RuntimeError(f"SkillsMP request failed for {frame} page {page}: {payload}")
+            raise RuntimeError(f"SkillsMP request failed for {frame}/{stratum}: {payload}")
         for position, item in enumerate(items, 1):
-            updated = val(item, "updatedAt", "updated_at", default="")
             records.append({
                 "skillsmp_id": str(val(item, "id", "skillId", "slug", default="")).strip(),
                 "name": str(val(item, "name", "title", default="")).strip(),
@@ -131,34 +164,36 @@ for frame, sort_by in (("stars", "stars"), ("recent", "recent")):
                 "github_url": str(val(item, "githubUrl", "github_url", "sourceUrl", default="")).strip(),
                 "skillsmp_url": str(val(item, "skillUrl", "url", "marketplaceUrl", default="")).strip(),
                 "stars": val(item, "stars", "githubStars", "stargazersCount", default=""),
-                "updated_at": str(updated).strip(),
+                "updated_at": str(val(item, "updatedAt", "updated_at", default="")).strip(),
                 "api_category": str(val(item, "category", "categoryName", default="")).strip(),
                 "frame": frame,
-                "query": "*",
-                "category_filter": CATEGORY,
-                "page": page,
+                "stratum": stratum,
+                "query": query,
+                "standards_basis": standards_basis,
+                "query_order": query_order,
+                "page": query_order,
                 "position": position,
-                "frame_rank": (page - 1) * LIMIT + position,
+                "frame_rank": position,
             })
-        if calls < PAGES_PER_FRAME * 2:
+        if calls < len(STRATA) * 2:
             time.sleep(SLEEP_SECONDS)
 
-if calls != PAGES_PER_FRAME * 2:
-    raise RuntimeError(f"Expected {PAGES_PER_FRAME * 2} API requests, made {calls}")
+if calls != len(STRATA) * 2:
+    raise RuntimeError(f"Expected {len(STRATA) * 2} API requests, made {calls}")
 
 occurrence_fields = [
     "skillsmp_id", "name", "author", "description", "content_language", "github_url",
-    "skillsmp_url", "stars", "updated_at", "api_category", "frame", "query",
-    "category_filter", "page", "position", "frame_rank",
+    "skillsmp_url", "stars", "updated_at", "api_category", "frame", "stratum", "query",
+    "standards_basis", "query_order", "page", "position", "frame_rank",
 ]
 write_csv(OUT / "ranked_frame_occurrences.csv", records, occurrence_fields)
 write_csv(
     OUT / "query_log.csv",
     logs,
     [
-        "frame", "query", "category", "sort_by", "page", "limit", "status", "returned",
-        "reported_total", "reported_total_pages", "request_url", "daily_remaining",
-        "minute_remaining", "raw_file",
+        "frame", "stratum", "query", "standards_basis", "query_order", "category",
+        "sort_by", "page", "limit", "status", "returned", "reported_total",
+        "reported_total_pages", "request_url", "daily_remaining", "minute_remaining", "raw_file",
     ],
 )
 
@@ -167,77 +202,101 @@ for row in records:
     key = row["skillsmp_id"] or row["skillsmp_url"] or row["github_url"] or f"{row['name']}|{row['author']}"
     current = union.setdefault(
         key,
-        {k: row.get(k, "") for k in occurrence_fields if k not in ("frame", "query", "category_filter", "page", "position", "frame_rank")},
+        {k: row.get(k, "") for k in occurrence_fields if k not in ("frame", "stratum", "query", "standards_basis", "query_order", "page", "position", "frame_rank")},
     )
     frame = row["frame"]
     current[f"in_{frame}_frame"] = True
+    current.setdefault(f"{frame}_query_strata", [])
+    current[f"{frame}_query_strata"].append(row["stratum"])
     previous = current.get(f"{frame}_rank")
     current[f"{frame}_rank"] = row["frame_rank"] if previous in (None, "") else min(int(previous), int(row["frame_rank"]))
 
 for row in union.values():
-    row.setdefault("in_stars_frame", False)
-    row.setdefault("stars_rank", "")
-    row.setdefault("in_recent_frame", False)
-    row.setdefault("recent_rank", "")
+    for frame in ("stars", "recent"):
+        row.setdefault(f"in_{frame}_frame", False)
+        row.setdefault(f"{frame}_rank", "")
+        row[f"{frame}_query_strata"] = "; ".join(sorted(set(row.get(f"{frame}_query_strata", []))))
+    row["query_hit_count"] = len([x for x in (row["stars_query_strata"] + "; " + row["recent_query_strata"]).split("; ") if x])
 
 union_rows = list(union.values())
 union_fields = [
     "skillsmp_id", "name", "author", "description", "content_language", "github_url",
     "skillsmp_url", "stars", "updated_at", "api_category", "in_stars_frame", "stars_rank",
-    "in_recent_frame", "recent_rank",
+    "stars_query_strata", "in_recent_frame", "recent_rank", "recent_query_strata",
+    "query_hit_count",
 ]
 write_csv(OUT / "ranked_frame_union.csv", union_rows, union_fields)
 
 stars_ids = {key for key, value in union.items() if value.get("in_stars_frame")}
 recent_ids = {key for key, value in union.items() if value.get("in_recent_frame")}
 
-saturation: list[dict] = []
+marginal_yield: list[dict] = []
 combined_seen: set[str] = set()
 for frame in ("stars", "recent"):
     frame_seen: set[str] = set()
-    for page in range(1, PAGES_PER_FRAME + 1):
-        page_keys = {
+    for query_order, (stratum, query, standards_basis) in enumerate(STRATA, 1):
+        keys = {
             row["skillsmp_id"] or row["skillsmp_url"] or row["github_url"] or f"{row['name']}|{row['author']}"
             for row in records
-            if row["frame"] == frame and int(row["page"]) == page
+            if row["frame"] == frame and row["stratum"] == stratum
         }
-        new_within = len(page_keys - frame_seen)
-        new_combined = len(page_keys - combined_seen)
-        frame_seen |= page_keys
-        combined_seen |= page_keys
-        saturation.append({
+        marginal_yield.append({
             "frame": frame,
-            "page": page,
-            "returned_unique_on_page": len(page_keys),
-            "new_unique_within_frame": new_within,
-            "cumulative_unique_within_frame": len(frame_seen),
-            "new_unique_to_combined_union": new_combined,
-            "cumulative_combined_union": len(combined_seen),
+            "query_order": query_order,
+            "stratum": stratum,
+            "query": query,
+            "standards_basis": standards_basis,
+            "returned_unique": len(keys),
+            "new_unique_within_frame": len(keys - frame_seen),
+            "cumulative_unique_within_frame": len(frame_seen | keys),
+            "new_unique_to_combined_union": len(keys - combined_seen),
+            "cumulative_combined_union": len(combined_seen | keys),
         })
+        frame_seen |= keys
+        combined_seen |= keys
+write_csv(
+    OUT / "marginal_yield_by_stratum.csv",
+    marginal_yield,
+    [
+        "frame", "query_order", "stratum", "query", "standards_basis", "returned_unique",
+        "new_unique_within_frame", "cumulative_unique_within_frame",
+        "new_unique_to_combined_union", "cumulative_combined_union",
+    ],
+)
+# Compatibility with the existing review script; locally this is relabelled as stratum saturation.
 write_csv(
     OUT / "saturation_by_page.csv",
-    saturation,
     [
-        "frame", "page", "returned_unique_on_page", "new_unique_within_frame",
-        "cumulative_unique_within_frame", "new_unique_to_combined_union",
-        "cumulative_combined_union",
+        {
+            "frame": r["frame"],
+            "page": r["query_order"],
+            "returned_unique_on_page": r["returned_unique"],
+            "new_unique_on_page": r["new_unique_within_frame"],
+            "cumulative_unique": r["cumulative_unique_within_frame"],
+        }
+        for r in marginal_yield
     ],
+    ["frame", "page", "returned_unique_on_page", "new_unique_on_page", "cumulative_unique"],
 )
 
 diagnostics = {
-    "design": "Deterministic category-ranked dual frame",
-    "query": "*",
+    "design": "Preregistered equal-budget ontology-stratified paired ranking study",
     "category": CATEGORY,
+    "strata": [
+        {"stratum": s, "query": q, "standards_basis": basis}
+        for s, q, basis in STRATA
+    ],
     "sort_frames": ["stars", "recent"],
-    "pages_per_frame": PAGES_PER_FRAME,
-    "limit_per_page": LIMIT,
+    "requests_per_frame": len(STRATA),
+    "limit_per_query": LIMIT,
     "api_requests": calls,
     "stars_frame_unique": len(stars_ids),
     "recent_frame_unique": len(recent_ids),
     "frame_overlap": len(stars_ids & recent_ids),
     "ranked_union_unique": len(union_rows),
     "jaccard_overlap": round(len(stars_ids & recent_ids) / max(1, len(stars_ids | recent_ids)), 6),
-    "interpretation": "Reproducible popularity and recency coverage frames; not a probability sample and not a full catalog census.",
+    "interpretation": "Deterministic standards-grounded, ontology-stratified paired rankings; not a probability sample and not a full catalog census.",
+    "wildcard_pilot_result": "SkillsMP rejected q=* with INVALID_QUERY because the query must contain a letter or number; therefore a category-wide wildcard census was not technically available.",
 }
 (OUT / "frame_diagnostics.json").write_text(json.dumps(diagnostics, ensure_ascii=False, indent=2), encoding="utf-8")
 print(json.dumps(diagnostics, ensure_ascii=False, indent=2))
