@@ -1,4 +1,4 @@
-name: SkillsMP scientific security rebuild
+name: SkillsMP scientific security rebuild corrected
 
 on:
   pull_request:
@@ -22,18 +22,16 @@ jobs:
           python-version: "3.12"
       - name: Install dependencies
         run: python -m pip install --disable-pip-version-check requests
-      - name: Apply validated SkillsMP API compatibility patch
+      - name: Apply verified SkillsMP Security-category configuration
         run: |
-          # Pilot evidence: q=* is rejected and category=testing-security returns zero
-          # for otherwise productive security queries. Run the preregistered ontology
-          # across SkillsMP without asserting a nonfunctional category filter.
-          sed -i 's/CATEGORY = "testing-security"/CATEGORY = ""/' skillsmp_collect.py
-          sed -i '/^[[:space:]]*"category": CATEGORY,[[:space:]]*$/d' skillsmp_collect.py
+          sed -i 's/CATEGORY = "testing-security"/CATEGORY = "security"/' skillsmp_collect.py
+          sed -i 's/LIMIT = 50/LIMIT = 100/' skillsmp_collect.py
+          grep -n '^CATEGORY\|^LIMIT\|^SLEEP_SECONDS' skillsmp_collect.py
       - name: Compile collectors
         run: |
           python -m py_compile skillsmp_collect.py
           python -m py_compile skillsmp_review.py
-      - name: Collect balanced ontology-stratified SkillsMP frames
+      - name: Collect preregistered category-filtered popularity and recency frames
         id: collect
         continue-on-error: true
         run: python skillsmp_collect.py
@@ -42,15 +40,40 @@ jobs:
         if: steps.collect.outcome == 'success'
         continue-on-error: true
         run: python skillsmp_review.py
-      - name: Upload scientific SkillsMP evidence
+      - name: Validate nonzero scientific collection and correct methodology
+        id: validate
+        if: steps.review.outcome == 'success'
+        continue-on-error: true
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          out=Path('skillsmp_scientific_output')
+          diag=json.loads((out/'scientific_diagnostics.json').read_text(encoding='utf-8'))
+          assert diag.get('category') == 'security', diag
+          assert int(diag.get('api_requests',0)) == 50, diag
+          assert int(diag.get('ranked_union_unique',0)) > 0, diag
+          assert int(diag.get('source_records_reviewed',0)) == int(diag.get('ranked_union_unique',0)), diag
+          assert int(diag.get('source_resolved',0)) > 0, diag
+          diag['retrieval_interpretation'] = (
+              'Preregistered equal-budget, standards-grounded, query-stratified popularity and recency frames '
+              'within the SkillsMP Security category. Rankings are query-specific, not global. The collection is '
+              'not a probability sample and not a complete category census.'
+          )
+          diag['category_slug_validation'] = 'The first planned query returned nonzero Security-category results.'
+          (out/'scientific_diagnostics.json').write_text(json.dumps(diag,ensure_ascii=False,indent=2),encoding='utf-8')
+          (out/'methodology.md').write_text('''# SkillsMP scientific retrieval design\n\nThe collection uses the verified `security` category slug and 25 preregistered, standards-grounded security query strata. Each stratum receives an equal retrieval budget: one page of up to 100 records ranked by repository stars and one page of up to 100 records ranked by recency. All unique records returned by either frame are source-resolved and reviewed; description keywords do not exclude any ranked-frame record before source review.\n\nThe design supports analysis of query-stratified popularity and recency frames. It does not support claims that the records are the globally top-starred, globally most-relevant, random, representative, or complete set of SkillsMP Security skills. GitHub stars are repository-level popularity rather than per-skill adoption.\n''',encoding='utf-8')
+          print(json.dumps(diag,ensure_ascii=False,indent=2))
+          PY
+      - name: Upload corrected scientific SkillsMP evidence
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: skillsmp-scientific-security-rebuild
+          name: skillsmp-scientific-security-corrected
           path: skillsmp_scientific_output
           include-hidden-files: true
           if-no-files-found: error
           retention-days: 7
-      - name: Propagate collection or review failure after evidence upload
-        if: steps.collect.outcome == 'failure' || steps.review.outcome == 'failure'
+      - name: Propagate collection, review, or validation failure after evidence upload
+        if: steps.collect.outcome == 'failure' || steps.review.outcome == 'failure' || steps.validate.outcome == 'failure'
         run: exit 1
