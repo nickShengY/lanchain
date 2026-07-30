@@ -1,0 +1,56 @@
+name: SkillsMP scientific security rebuild
+
+on:
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  collect-review:
+    runs-on: ubuntu-latest
+    timeout-minutes: 330
+    env:
+      GITHUB_TOKEN: ${{ github.token }}
+      PYTHONUNBUFFERED: "1"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install dependencies
+        run: python -m pip install --disable-pip-version-check requests
+      - name: Apply validated SkillsMP API compatibility patch
+        run: |
+          # Pilot evidence: q=* is rejected and category=testing-security returns zero
+          # for otherwise productive security queries. Run the preregistered ontology
+          # across SkillsMP without asserting a nonfunctional category filter.
+          sed -i 's/CATEGORY = "testing-security"/CATEGORY = ""/' skillsmp_collect.py
+          sed -i '/^[[:space:]]*"category": CATEGORY,[[:space:]]*$/d' skillsmp_collect.py
+      - name: Compile collectors
+        run: |
+          python -m py_compile skillsmp_collect.py
+          python -m py_compile skillsmp_review.py
+      - name: Collect balanced ontology-stratified SkillsMP frames
+        id: collect
+        continue-on-error: true
+        run: python skillsmp_collect.py
+      - name: Source-review every unique returned listing
+        id: review
+        if: steps.collect.outcome == 'success'
+        continue-on-error: true
+        run: python skillsmp_review.py
+      - name: Upload scientific SkillsMP evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: skillsmp-scientific-security-rebuild
+          path: skillsmp_scientific_output
+          include-hidden-files: true
+          if-no-files-found: error
+          retention-days: 7
+      - name: Propagate collection or review failure after evidence upload
+        if: steps.collect.outcome == 'failure' || steps.review.outcome == 'failure'
+        run: exit 1
