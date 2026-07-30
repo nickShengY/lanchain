@@ -20,6 +20,25 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
+      - name: Correct renamed or consolidated skill paths
+        run: |
+          python - <<'PY'
+          import json
+          path='extra_source_manifest.json'
+          records=json.load(open(path,encoding='utf-8'))
+          corrected={
+            'CM-00047':'skills/okx-agentic-wallet',
+            'CS-01617':'skills/implementing-cloud-security-posture-management',
+            'CS-01633':'skills/conducting-cloud-penetration-testing',
+            'CS-01713':'skills/detecting-cryptomining-in-cloud',
+            'CS-01714':'skills/hunting-for-living-off-the-land-binaries',
+            'CS-01746':'skills/hunting-for-webshell-activity',
+          }
+          for record in records:
+              if record['occurrence_id'] in corrected:
+                  record['path_hint']=corrected[record['occurrence_id']]
+          json.dump(records,open(path,'w',encoding='utf-8'),ensure_ascii=False,indent=2)
+          PY
       - name: Review every final candidate source
         id: review
         continue-on-error: true
