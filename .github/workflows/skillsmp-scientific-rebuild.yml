@@ -1,0 +1,112 @@
+name: SkillsMP scientific security rebuild corrected and publish
+
+on:
+  pull_request:
+    branches: [main]
+    paths-ignore:
+      - 'published_scientific_results/**'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  collect-review:
+    runs-on: ubuntu-latest
+    timeout-minutes: 330
+    env:
+      GITHUB_TOKEN: ${{ github.token }}
+      PYTHONUNBUFFERED: "1"
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.head_ref || github.ref_name }}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install dependencies
+        run: python -m pip install --disable-pip-version-check requests
+      - name: Apply verified SkillsMP Security-category configuration
+        run: |
+          sed -i 's/CATEGORY = "testing-security"/CATEGORY = "security"/' skillsmp_collect.py
+          grep -q 'CATEGORY = "security"' skillsmp_collect.py
+      - name: Compile collectors
+        run: |
+          python -m py_compile skillsmp_collect.py
+          python -m py_compile skillsmp_review.py
+      - name: Collect preregistered category-filtered popularity and recency frames
+        id: collect
+        continue-on-error: true
+        run: python skillsmp_collect.py
+      - name: Source-review every unique returned listing
+        id: review
+        if: steps.collect.outcome == 'success'
+        continue-on-error: true
+        run: python skillsmp_review.py
+      - name: Validate nonzero scientific collection and correct methodology
+        id: validate
+        if: steps.collect.outcome == 'success' && steps.review.outcome == 'success'
+        continue-on-error: true
+        run: |
+          python - <<'PY'
+          import csv, json
+          from pathlib import Path
+          out = Path('skillsmp_scientific_output')
+          diag = json.loads((out/'scientific_diagnostics.json').read_text())
+          log = list(csv.DictReader((out/'query_log.csv').open(encoding='utf-8-sig')))
+          union = list(csv.DictReader((out/'ranked_frame_union.csv').open(encoding='utf-8-sig')))
+          reviews = list(csv.DictReader((out/'source_review_all.csv').open(encoding='utf-8-sig')))
+          assert len(log) == 50, len(log)
+          assert all(r['status'] == '200' for r in log), [r for r in log if r['status'] != '200']
+          assert all(r['category'] == 'security' for r in log), sorted({r['category'] for r in log})
+          assert sum(int(r['returned']) for r in log) > 0
+          assert len(union) > 0
+          assert len(reviews) == len(union), (len(reviews), len(union))
+          assert int(diag['unique_union']) == len(union)
+          assert int(diag['source_records_reviewed']) == len(reviews)
+          print(json.dumps(diag, indent=2))
+          PY
+      - name: Package corrected scientific output
+        if: steps.collect.outcome == 'success' && steps.review.outcome == 'success' && steps.validate.outcome == 'success'
+        run: |
+          rm -rf published_scientific_results
+          mkdir -p published_scientific_results
+          cp -R skillsmp_scientific_output published_scientific_results/skillsmp_scientific_output
+          python - <<'PY'
+          from pathlib import Path
+          import hashlib, json, zipfile
+          root = Path('published_scientific_results/skillsmp_scientific_output')
+          manifest=[]
+          for p in sorted(root.rglob('*')):
+              if p.is_file():
+                  h=hashlib.sha256(p.read_bytes()).hexdigest()
+                  manifest.append({'path':str(p.relative_to(root)),'bytes':p.stat().st_size,'sha256':h})
+          (root/'MANIFEST.json').write_text(json.dumps(manifest,indent=2),encoding='utf-8')
+          zp=Path('published_scientific_results/skillsmp_scientific_output_VERIFIED.zip')
+          with zipfile.ZipFile(zp,'w',zipfile.ZIP_DEFLATED,compresslevel=6) as z:
+              for p in sorted(root.rglob('*')):
+                  if p.is_file(): z.write(p,arcname=f'skillsmp_scientific_output/{p.relative_to(root)}')
+          with zipfile.ZipFile(zp) as z:
+              assert z.testzip() is None
+          print(zp, zp.stat().st_size)
+          PY
+      - name: Publish verified result to head branch
+        if: steps.collect.outcome == 'success' && steps.review.outcome == 'success' && steps.validate.outcome == 'success'
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add -f published_scientific_results
+          git commit -m "Publish verified corrected SkillsMP scientific output [skip ci]" || exit 0
+          git push origin HEAD:${{ github.head_ref || github.ref_name }}
+      - name: Upload corrected scientific SkillsMP evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: skillsmp-scientific-security-rebuild-corrected
+          path: published_scientific_results
+          include-hidden-files: true
+          if-no-files-found: error
+          retention-days: 7
+      - name: Propagate collection, review, or validation failure after evidence upload
+        if: steps.collect.outcome == 'failure' || steps.review.outcome == 'failure' || steps.validate.outcome == 'failure'
+        run: exit 1
