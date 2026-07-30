@@ -1,0 +1,140 @@
+[
+  {
+    "record_id": "SRC-02254",
+    "skill_name": "phy-k8s-security-audit",
+    "repo": "LeoYeAI/openclaw-master-skills",
+    "path": "skills/phy-k8s-security-audit/SKILL.md"
+  },
+  {
+    "record_id": "SRC-02255",
+    "skill_name": "perl-security",
+    "repo": "aibot88/sec_skill_store",
+    "path": "skills/claudskills/perl-security/SKILL.md"
+  },
+  {
+    "record_id": "SRC-02301",
+    "skill_name": "entra-workload-identity",
+    "repo": "vinayaklatthe/microsoft-security-skills",
+    "path": "skills/entra-workload-identity/SKILL.md"
+  },
+  {
+    "record_id": "SRC-02315",
+    "skill_name": "auditing-cloud-with-cis-benchmarks",
+    "repo": "mukul975/Anthropic-Cybersecurity-Skills",
+    "path": "skills/auditing-cloud-with-cis-benchmarks/SKILL.md"
+  },
+  {
+    "record_id": "SRC-02327",
+    "skill_name": "offensive-bluetooth-ble",
+    "repo": "SnailSploit/Claude-Red",
+    "path": "Skills/wireless/offensive-bluetooth-ble/SKILL.md"
+  },
+  {
+    "record_id": "SRC-02341",
+    "skill_name": "django-security",
+    "repo": "nyvlemyt/MultiAgentOS",
+    "path": "packages/skills/library/django-security/SKILL.md"
+  },
+  {
+    "record_id": "SRC-02387",
+    "skill_name": "implementing-runtime-application-self-protection",
+    "repo": "mukul975/Anthropic-Cybersecurity-Skills",
+    "path": "skills/implementing-runtime-application-self-protection/SKILL.md"
+  },
+  {
+    "record_id": "SRC-02389",
+    "skill_name": "mobile-reverse",
+    "repo": "zhaoxuya520/reverse-skill",
+    "path": "skills/mobile-reverse/SKILL.md"
+  },
+  {
+    "record_id": "SRC-02414",
+    "skill_name": "rust-review",
+    "repo": "trailofbits/skills",
+    "path": "plugins/rust-review/skills/rust-review/SKILL.md"
+  },
+  {
+    "record_id": "SRC-02426",
+    "skill_name": "pentesting-redis",
+    "repo": "xalgord/xalgorix",
+    "path": "internal/tools/skills/data/network-services-pentesting/pentesting-redis/SKILL.md"
+  },
+  {
+    "record_id": "SRC-02439",
+    "skill_name": "exploiting-prototype-pollution-in-javascript",
+    "repo": "xalgord/xalgorix",
+    "path": "internal/tools/skills/data/web-application-security/exploiting-prototype-pollution-in-javascript/SKILL.md"
+  },
+  {
+    "record_id": "SRC-02443",
+    "skill_name": "bypassing-captcha-protections",
+    "repo": "xalgord/xalgorix",
+    "path": "internal/tools/skills/data/web-application-security/bypassing-captcha-protections/SKILL.md"
+  },
+  {
+    "record_id": "SRC-02444",
+    "skill_name": "testing-for-xml-injection-vulnerabilities",
+    "repo": "xalgord/xalgorix",
+    "path": "internal/tools/skills/data/web-application-security/testing-for-xml-injection-vulnerabilities/SKILL.md"
+  },
+  {
+    "record_id": "SRC-02453",
+    "skill_name": "remediating-s3-bucket-misconfiguration",
+    "repo": "mukul975/Anthropic-Cybersecurity-Skills",
+    "path": "skills/remediating-s3-bucket-misconfiguration/SKILL.md"
+  },
+  {
+    "record_id": "SRC-02461",
+    "skill_name": "remediating-s3-bucket-misconfiguration",
+    "repo": "xalgord/xalgorix",
+    "path": "internal/tools/skills/data/cloud-security/remediating-s3-bucket-misconfiguration/SKILL.md"
+  },
+  {
+    "record_id": "SRC-02462",
+    "skill_name": "performing-aws-account-enumeration-with-scout-suite",
+    "repo": "mukul975/Anthropic-Cybersecurity-Skills",
+    "path": "skills/performing-aws-account-enumeration-with-scout-suite/SKILL.md"
+  },
+  {
+    "record_id": "SRC-02465",
+    "skill_name": "exploiting-oauth-misconfiguration",
+    "repo": "xalgord/xalgorix",
+    "path": "internal/tools/skills/data/web-application-security/exploiting-oauth-misconfiguration/SKILL.md"
+  },
+  {
+    "record_id": "SRC-02468",
+    "skill_name": "analyzing-active-directory-acl-abuse",
+    "repo": "xalgord/xalgorix",
+    "path": "internal/tools/skills/data/identity-access-management/analyzing-active-directory-acl-abuse/SKILL.md"
+  },
+  {
+    "record_id": "SRC-02470",
+    "skill_name": "performing-aws-privilege-escalation-assessment",
+    "repo": "xalgord/xalgorix",
+    "path": "internal/tools/skills/data/cloud-security/performing-aws-privilege-escalation-assessment/SKILL.md"
+  },
+  {
+    "record_id": "SRC-02471",
+    "skill_name": "performing-aws-account-enumeration-with-scout-suite",
+    "repo": "xalgord/xalgorix",
+    "path": "internal/tools/skills/data/cloud-security/performing-aws-account-enumeration-with-scout-suite/SKILL.md"
+  },
+  {
+    "record_id": "SRC-02475",
+    "skill_name": "pentesting-oracle",
+    "repo": "xalgord/xalgorix",
+    "path": "internal/tools/skills/data/network-services-pentesting/pentesting-oracle/SKILL.md"
+  },
+  {
+    "record_id": "SRC-02476",
+    "skill_name": "pentesting-nfs",
+    "repo": "xalgord/xalgorix",
+    "path": "internal/tools/skills/data/network-services-pentesting/pentesting-nfs/SKILL.md"
+  },
+  {
+    "record_id": "SRC-02477",
+    "skill_name": "pentesting-rsync",
+    "repo": "xalgord/xalgorix",
+    "path": "internal/tools/skills/data/network-services-pentesting/pentesting-rsync/SKILL.md"
+  }
+]
